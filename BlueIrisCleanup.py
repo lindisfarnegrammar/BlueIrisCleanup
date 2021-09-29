@@ -79,7 +79,8 @@ try:
     count = 0
     while 1:
         name, value, type = winreg.EnumValue(key, count)
-        if (name == "sysname") sysname = value
+        if (name == "sysname"):
+            sysname = value
         count = count + 1
 except WindowsError:
     pass    
