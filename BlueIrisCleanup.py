@@ -230,5 +230,3 @@ if (len(actions_taken) == 0):
 
 if (len(actions_taken) > 0):
     send_email(sysname, actions_taken)
-
-print(sysname)
