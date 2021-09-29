@@ -24,12 +24,15 @@ yesterday_midnight = (datetime.combine(datetime.today(), time.min)) - timedelta(
 NewClipsKey = r"SOFTWARE\Perspective Software\Blue Iris\clips\folders\0"
 StoredClipsKey = r"SOFTWARE\Perspective Software\Blue Iris\clips\folders\1"
 AlertsClipsKey = r"SOFTWARE\Perspective Software\Blue Iris\clips\folders\2"
+OptionsKey = r"SOFTWARE\Perspective Software\Blue Iris\options"
 
 newDict = {}
 storedDict = {}
 alertsDict = {}
 
 actions_taken = []
+
+sysname = ""
 
 def send_email(cctv_server, actions_taken):
 
@@ -69,7 +72,17 @@ def getFreeSpace(drive_letter):
         if (d.Caption.upper() == drive_letter.upper()):
             retval = d.FreeSpace
     return retval
-    
+
+# Get the System Name
+key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, OptionsKey, 0, winreg.KEY_READ)
+try:
+    count = 0
+    while 1:
+        name, value, type = winreg.EnumValue(key, count)
+        if (name == "sysname") sysname = value
+        count = count + 1
+except WindowsError:
+    pass    
 
 # Get the New information
 key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NewClipsKey, 0, winreg.KEY_READ)
@@ -215,4 +228,6 @@ if (len(actions_taken) == 0):
         print("Alerts folder free space is greater than " + str(free_space_minimum) + "GB, don't need to do anything")                    
 
 if (len(actions_taken) > 0):
-    send_email("Gavin's Server", actions_taken)
+    send_email(sysname, actions_taken)
+
+print(sysname)
