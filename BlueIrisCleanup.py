@@ -17,6 +17,8 @@ from email.mime.text import MIMEText
 from email.header import Header
 from email.utils import formataddr
 
+free_space_minimum = 5
+
 yesterday_midnight = (datetime.combine(datetime.today(), time.min)) - timedelta(days=1)
 
 NewClipsKey = r"SOFTWARE\Perspective Software\Blue Iris\clips\folders\0"
@@ -119,7 +121,7 @@ alertsFolderFreeSpace = int((str(getFreeSpace(alertsFolderDriveLetter + ":")))) 
 
 # New folder
 # If free space is less than 5GB, do something
-if (newFolderFreeSpace < 5):
+if (newFolderFreeSpace < free_space_minimum):
     print("New folder free space is less than 5GB, seeing what we can do...")
     # Move the oldest file to the Stored folder
     for file in newFiles:
@@ -144,7 +146,7 @@ else:
 # Stored folder
 # If free space is less than 5GB, do something
 if (len(actions_taken) == 0):
-    if (newFolderFreeSpace < 5):
+    if (newFolderFreeSpace < free_space_minimum):
         print("New folder free space is less than 5GB, seeing what we can do...")
         # Delete the oldest file
         oldest_file = ""
@@ -180,7 +182,7 @@ if (len(actions_taken) == 0):
 # Alerts folder
 # If free space is less than 5GB, do something
 if (len(actions_taken) == 0):
-    if (alertsFolderFreeSpace < 60):
+    if (alertsFolderFreeSpace < free_space_minimum):
             print("Alerts folder free space is less than 5GB, seeing what we can do...")
             # Delete the oldest file
             oldest_file = ""
