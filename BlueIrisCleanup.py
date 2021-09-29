@@ -179,6 +179,7 @@ if (len(actions_taken) == 0):
 
 # Alerts folder
 # If free space is less than 5GB, do something
+print(len(actions_taken))
 if (len(actions_taken) == 0):
     if (alertsFolderFreeSpace < 40):
             print("Alerts folder free space is less than 5GB, seeing what we can do...")
