@@ -179,7 +179,6 @@ if (len(actions_taken) == 0):
 
 # Alerts folder
 # If free space is less than 5GB, do something
-print(len(actions_taken))
 if (len(actions_taken) == 0):
     if (alertsFolderFreeSpace < 40):
             print("Alerts folder free space is less than 5GB, seeing what we can do...")
@@ -210,6 +209,9 @@ if (len(actions_taken) == 0):
                 except:
                     print("There was an error deleting the file '" + file + "'")
                     actions_taken.append("Error deleting Alert file " + file)
+    else:
+        print("Alerts folder free space > 40")
 
+        
 if (len(actions_taken) > 0):
     send_email("Gavin's Server", actions_taken)
