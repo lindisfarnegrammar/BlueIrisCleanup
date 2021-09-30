@@ -48,7 +48,7 @@ def send_email(cctv_server, actions_taken):
     msg['From'] = formataddr((str(Header('Blue Iris Cleanup Script', 'utf-8')), me))
     msg['To'] = you
 
-    email_text = "<p><span style=\"font-weight: 400;\">The following actions were taken:<br><br>"
+    email_text = "" #<p><span style=\"font-weight: 400;\">The following actions were taken:<br><br>"
     
     for action in actions_taken: 
         email_text = email_text + action + "<br>"
@@ -137,6 +137,7 @@ alertsFolderFreeSpace = int((str(getFreeSpace(alertsFolderDriveLetter + ":")))) 
 # If free space is less than 5GB, do something
 if (newFolderFreeSpace < free_space_minimum):
     print("New folder free space is less than " + str(free_space_minimum) + "GB, seeing what we can do...")
+    actions_taken.append("New folder free space is less than " + str(free_space_minimum) + "GB! (" + str(newFolderFreeSpace) + "GB)<br>The following actions were taken:<br><br>")
     # Move the oldest file to the Stored folder
     for file in newFiles:
         st=os.stat(file)    
@@ -162,6 +163,7 @@ else:
 if (len(actions_taken) == 0):
     if (newFolderFreeSpace < free_space_minimum):
         print("New folder free space is less than " + str(free_space_minimum) + "GB, seeing what we can do...")
+        actions_taken.append("Stored folder free space is less than " + str(free_space_minimum) + "GB! (" + str(storedFolderFreeSpace) + "GB)<br>The following actions were taken:<br><br>")
         # Delete the oldest file
         oldest_file = ""
         oldest_file_age = 0
@@ -198,6 +200,7 @@ if (len(actions_taken) == 0):
 if (len(actions_taken) == 0):
     if (alertsFolderFreeSpace < free_space_minimum):
             print("Alerts folder free space is less than " + str(free_space_minimum) + "GB, seeing what we can do...")
+            actions_taken.append("Alerts folder free space is less than " + str(free_space_minimum) + "GB! (" + str(alertsFolderFreeSpace) + "GB)<br>The following actions were taken:<br><br>")
             # Delete the oldest file
             oldest_file = ""
             oldest_file_age = 0
