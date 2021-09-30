@@ -37,7 +37,7 @@ sysname = ""
 def send_email(cctv_server, actions_taken):
 
     me = "blueiris-script@lindisfarne.nsw.edu.au"
-    you = "gkennedy@lindisfarne.nsw.edu.au"
+    you = "itdepartment@lindisfarne.nsw.edu.au"
     bcc = ""
 
     you_list = you.split(",")
