@@ -140,6 +140,7 @@ if (newFolderFreeSpace < free_space_minimum):
     actions_taken.append("New folder free space is less than " + str(free_space_minimum) + "GB! (" + str(newFolderFreeSpace) + "GB)<br>The following actions were taken:<br><br>")
     # Move the oldest file to the Stored folder
     for file in newFiles:
+        actions.taken.append("Found files:<br>" + file + "<br>")
         st=os.stat(file)    
         mtime=st.st_mtime
         if (float(mtime) < float(yesterday_midnight.timestamp())):
