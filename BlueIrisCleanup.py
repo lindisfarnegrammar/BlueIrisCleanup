@@ -144,10 +144,13 @@ if (newFolderFreeSpace < free_space_minimum):
     print("Found files:")
     actions_taken.append("Found files:<br>")
     for file in newFiles:
-        print(file)
-        actions_taken.append(file + "<br>")
+
         st=os.stat(file)    
         mtime=st.st_mtime
+ 
+        print(file + "(" + str(mtime) + ")")
+        actions_taken.append(file + "(" + str(mtime) + ")<br>")
+
         if (float(mtime) < float(yesterday_midnight.timestamp())):
             print("File '" + file + "' is older than today, moving to Stored folder")
             print("Moving '" + file + "' to '" + storedDict["path"])
