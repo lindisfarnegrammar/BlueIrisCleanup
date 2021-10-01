@@ -19,7 +19,7 @@ from email.utils import formataddr
 
 free_space_minimum = 50
 
-yesterday_midnight = (datetime.combine(datetime.today(), time.min)) - timedelta(days=1)
+yesterday_midnight = (datetime.combine(datetime.today(), time.min)) - timedelta(days=1) + 60
 
 NewClipsKey = r"SOFTWARE\Perspective Software\Blue Iris\clips\folders\0"
 StoredClipsKey = r"SOFTWARE\Perspective Software\Blue Iris\clips\folders\1"
@@ -139,9 +139,9 @@ if (newFolderFreeSpace < free_space_minimum):
     print("New folder (" + newDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB, seeing what we can do...")
     actions_taken.append("New folder (" + newDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB! (" + str(newFolderFreeSpace) + "GB)<br>The following actions were taken:<br><br>")
     # Move the oldest file to the Stored folder
-    print("Number of new files: " + str(len(newFiles)))
+    print("Number of files in the New folder: " + str(len(newFiles)))
     actions_taken.append("Number of new files: " + str(len(newFiles)) + "<br>")
-    print("Found files:")
+    print("List of files:")
     actions_taken.append("Found files:<br>")
     for file in newFiles:
 
@@ -162,7 +162,7 @@ if (newFolderFreeSpace < free_space_minimum):
                 print("There was an error moving file '" + file + "'")
                 actions_taken.append("Error moving New file " + file + " to the Stored folder")
         else:
-            print("File '" + file + "' has today's timestamp, ignoring")
+            #print("File '" + file + "' has today's timestamp, ignoring")
             pass
 else:
     print("New folder free space is greater than " + str(free_space_minimum) + "GB, don't need to do anything")
