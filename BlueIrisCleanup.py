@@ -212,7 +212,7 @@ alertsFolderFreeSpace = int((str(getFreeSpace(alertsFolderDriveLetter + ":")))) 
 # If free space is less than limit, do something
 if (alertsFolderFreeSpace < free_space_minimum):
     print("New folder (" + alertsDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB, seeing what we can do...")
-    actions_taken.append("Alerts folder (" + alertsDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB! (" + str(alertsFolderFreeSpace) + "GB)<br>The following actions were taken:<br><br>")
+    actions_taken.append("Alerts folder (" + alertsDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB! (" + str(alertsFolderFreeSpace) + "GB)<br>The following actions were taken:<br>")
     # Delete the oldest file
     oldest_file = ""
     oldest_file_age = 0
