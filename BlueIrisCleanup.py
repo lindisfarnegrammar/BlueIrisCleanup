@@ -17,7 +17,7 @@ from email.mime.text import MIMEText
 from email.header import Header
 from email.utils import formataddr
 
-free_space_minimum = 5
+free_space_minimum = 50
 
 yesterday_midnight = (datetime.combine(datetime.today(), time.min)) - timedelta(days=1)
 
