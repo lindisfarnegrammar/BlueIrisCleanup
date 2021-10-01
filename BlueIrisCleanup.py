@@ -130,8 +130,8 @@ alertsFolderDriveLetter = alertsDict["path"].split(":")[0]
 
 # Get the free space on each folder's drive in Gigabytes
 newFolderFreeSpace = int((str(getFreeSpace(newFolderDriveLetter + ":")))) / 1024 / 1024 / 1024
-storedFolderFreeSpace = int((str(getFreeSpace(storedFolderDriveLetter + ":")))) / 1024 / 1024 / 1024
-alertsFolderFreeSpace = int((str(getFreeSpace(alertsFolderDriveLetter + ":")))) / 1024 / 1024 / 1024
+#storedFolderFreeSpace = int((str(getFreeSpace(storedFolderDriveLetter + ":")))) / 1024 / 1024 / 1024
+#alertsFolderFreeSpace = int((str(getFreeSpace(alertsFolderDriveLetter + ":")))) / 1024 / 1024 / 1024
 
 # New folder
 # If free space is less than limit, do something
@@ -160,79 +160,88 @@ if (newFolderFreeSpace < free_space_minimum):
             pass
 else:
     print("New folder free space is greater than " + str(free_space_minimum) + "GB, don't need to do anything")
-    
+
+# Get the free space on each folder's drive in Gigabytes
+#newFolderFreeSpace = int((str(getFreeSpace(newFolderDriveLetter + ":")))) / 1024 / 1024 / 1024
+storedFolderFreeSpace = int((str(getFreeSpace(storedFolderDriveLetter + ":")))) / 1024 / 1024 / 1024
+#alertsFolderFreeSpace = int((str(getFreeSpace(alertsFolderDriveLetter + ":")))) / 1024 / 1024 / 1024
+
 # Stored folder
 # If free space is less than limit, do something
-if (len(actions_taken) == 0):
-    if (newFolderFreeSpace < free_space_minimum):
-        print("New folder (" + storedDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB, seeing what we can do...")
-        actions_taken.append("Stored folder (" + storedDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB! (" + str(storedFolderFreeSpace) + "GB)<br>The following actions were taken:<br><br>")
-        # Delete the oldest file
-        print("Number of files in the Stored folder: " + str(len(storedFiles)))
-        actions_taken.append("Number of files in the Stored folder: " + str(len(storedFiles)) + "<br>")        
 
-        oldest_file = ""
-        oldest_file_age = 0
-        
-        for file in storedFiles:
-            st=os.stat(file)    
-            mtime=st.st_mtime
-            if (float(mtime) < float(yesterday_midnight.timestamp())):
-                if (float(mtime) < oldest_file_age or oldest_file_age == 0):
-                    oldest_file = file
-                    oldest_file_age = mtime
-            else:
-                pass
+if (storedFolderFreeSpace < free_space_minimum):
+    print("Stored folder (" + storedDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB, seeing what we can do...")
+    actions_taken.append("Stored folder (" + storedDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB! (" + str(storedFolderFreeSpace) + "GB)<br>The following actions were taken:<br><br>")
+    # Delete the oldest file
+    print("Number of files in the Stored folder: " + str(len(storedFiles)))
+    actions_taken.append("Number of files in the Stored folder: " + str(len(storedFiles)) + "<br>")        
 
-        if (oldest_file != ""):
-            print("File '" + oldest_file + "' is older than today, and is the oldest file in the Stored folder")
-            print("Deleting '" + oldest_file + "'")
-            try:
-                os.remove(oldest_file)
-                print(" - Successfully deleted the file")
-                actions_taken.append("Deleted Stored file " + file)
-            except:
-                print("There was an error deleting the file '" + file + "'")
-                actions_taken.append("Error deleting Stored file " + file)
+    oldest_file = ""
+    oldest_file_age = 0
+    
+    for file in storedFiles:
+        st=os.stat(file)    
+        mtime=st.st_mtime
+        if (float(mtime) < float(yesterday_midnight.timestamp())):
+            if (float(mtime) < oldest_file_age or oldest_file_age == 0):
+                oldest_file = file
+                oldest_file_age = mtime
+        else:
+            pass
 
-    else:
-        print("Stored folder free space is greater than " + str(free_space_minimum) + "GB, don't need to do anything")
+    if (oldest_file != ""):
+        print("File '" + oldest_file + "' is older than today, and is the oldest file in the Stored folder")
+        print("Deleting '" + oldest_file + "'")
+        try:
+            os.remove(oldest_file)
+            print(" - Successfully deleted the file")
+            actions_taken.append("Deleted Stored file " + file)
+        except:
+            print("There was an error deleting the file '" + file + "'")
+            actions_taken.append("Error deleting Stored file " + file)
+
+else:
+    print("Stored folder free space is greater than " + str(free_space_minimum) + "GB, don't need to do anything")
+
+# Get the free space on each folder's drive in Gigabytes
+#newFolderFreeSpace = int((str(getFreeSpace(newFolderDriveLetter + ":")))) / 1024 / 1024 / 1024
+#storedFolderFreeSpace = int((str(getFreeSpace(storedFolderDriveLetter + ":")))) / 1024 / 1024 / 1024
+alertsFolderFreeSpace = int((str(getFreeSpace(alertsFolderDriveLetter + ":")))) / 1024 / 1024 / 1024
 
 # Alerts folder
 # If free space is less than limit, do something
-if (len(actions_taken) < 3):
-    if (alertsFolderFreeSpace < free_space_minimum):
-        print("New folder (" + alertsDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB, seeing what we can do...")
-        actions_taken.append("Alerts folder (" + alertsDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB! (" + str(alertsFolderFreeSpace) + "GB)<br>The following actions were taken:<br><br>")
-        # Delete the oldest file
-        oldest_file = ""
-        oldest_file_age = 0
-        
-        for file in alertsFiles:
-            st=os.stat(file)    
-            mtime=st.st_mtime
-            if (float(mtime) < float(yesterday_midnight.timestamp())):
-                if (float(mtime) < oldest_file_age or oldest_file_age == 0):
-                    oldest_file = file
-                    oldest_file_age = mtime
-            else:
-                pass
+if (alertsFolderFreeSpace < free_space_minimum):
+    print("New folder (" + alertsDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB, seeing what we can do...")
+    actions_taken.append("Alerts folder (" + alertsDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB! (" + str(alertsFolderFreeSpace) + "GB)<br>The following actions were taken:<br><br>")
+    # Delete the oldest file
+    oldest_file = ""
+    oldest_file_age = 0
+    
+    for file in alertsFiles:
+        st=os.stat(file)    
+        mtime=st.st_mtime
+        if (float(mtime) < float(yesterday_midnight.timestamp())):
+            if (float(mtime) < oldest_file_age or oldest_file_age == 0):
+                oldest_file = file
+                oldest_file_age = mtime
+        else:
+            pass
 
-        #print(oldest_file)
-        #print(oldest_file_age)
+    #print(oldest_file)
+    #print(oldest_file_age)
 
-        if (oldest_file != ""):
-            print("File '" + oldest_file + "' is older than today, and is the oldest file in the Alerts folder")
-            print("Deleting '" + oldest_file + "'")
-            try:
-                os.remove(oldest_file)
-                print(" - Successfully deleted the file")
-                actions_taken.append("Deleted Alert file " + file)
-            except:
-                print("There was an error deleting the file '" + file + "'")
-                actions_taken.append("Error deleting Alert file " + file)
-    else:
-        print("Alerts folder free space is greater than " + str(free_space_minimum) + "GB, don't need to do anything")                    
+    if (oldest_file != ""):
+        print("File '" + oldest_file + "' is older than today, and is the oldest file in the Alerts folder")
+        print("Deleting '" + oldest_file + "'")
+        try:
+            os.remove(oldest_file)
+            print(" - Successfully deleted the file")
+            actions_taken.append("Deleted Alert file " + file)
+        except:
+            print("There was an error deleting the file '" + file + "'")
+            actions_taken.append("Error deleting Alert file " + file)
+else:
+    print("Alerts folder free space is greater than " + str(free_space_minimum) + "GB, don't need to do anything")                    
 
 if (len(actions_taken) > 0):
     send_email(sysname, actions_taken)
