@@ -139,7 +139,7 @@ if (newFolderFreeSpace < free_space_minimum):
     print("New folder (" + newDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB, seeing what we can do...")
     actions_taken.append("New folder (" + newDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB! (" + str(newFolderFreeSpace) + "GB)<br>The following actions were taken:<br><br>")
     # Move the oldest file to the Stored folder
-    print("Number of new files: " + len(newFiles))
+    print("Number of new files: " + str(len(newFiles)))
     for file in newFiles:
         actions_taken.append("Found files:<br>" + file + "<br>")
         st=os.stat(file)    
