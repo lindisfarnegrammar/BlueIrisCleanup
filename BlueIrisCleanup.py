@@ -200,7 +200,7 @@ if (len(actions_taken) == 0):
 
 # Alerts folder
 # If free space is less than limit, do something
-if (len(actions_taken) == 0):
+if (len(actions_taken) < 3):
     if (alertsFolderFreeSpace < free_space_minimum):
         print("New folder (" + alertsDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB, seeing what we can do...")
         actions_taken.append("Alerts folder (" + alertsDict["path"] + ") free space is less than " + str(free_space_minimum) + "GB! (" + str(alertsFolderFreeSpace) + "GB)<br>The following actions were taken:<br><br>")
