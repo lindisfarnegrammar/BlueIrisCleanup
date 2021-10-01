@@ -19,7 +19,7 @@ from email.utils import formataddr
 
 free_space_minimum = 50
 
-yesterday_midnight = (datetime.combine(datetime.today(), time.min)) - timedelta(days=1) + 60
+yesterday_midnight = (datetime.combine(datetime.today(), time.min)) - timedelta(days=1) + timedelta(minutes=1)
 
 NewClipsKey = r"SOFTWARE\Perspective Software\Blue Iris\clips\folders\0"
 StoredClipsKey = r"SOFTWARE\Perspective Software\Blue Iris\clips\folders\1"
