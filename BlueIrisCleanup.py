@@ -143,7 +143,6 @@ if (newFolderFreeSpace < free_space_minimum):
     actions_taken.append("Number of new files: " + str(len(newFiles)) + "<br>")
     print("Found files:")
     actions_taken.append("Found files:<br>")
-    actions_taken.append()
     for file in newFiles:
         print(file)
         actions_taken.append(file + "<br>")
