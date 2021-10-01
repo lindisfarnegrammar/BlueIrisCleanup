@@ -148,8 +148,8 @@ if (newFolderFreeSpace < free_space_minimum):
         st=os.stat(file)    
         mtime=st.st_mtime
  
-        print(file + "(" + str(mtime) + " vs " + yesterday_midnight.timestamp() + ")")
-        actions_taken.append(file + "(" + str(mtime) + " vs " + yesterday_midnight.timestamp() + ")<br>")
+        print(file + "(" + str(mtime) + " vs " + str(yesterday_midnight.timestamp()) + ")")
+        actions_taken.append(file + "(" + str(mtime) + " vs " + str(yesterday_midnight.timestamp()) + ")<br>")
 
         if (float(mtime) < float(yesterday_midnight.timestamp())):
             print("File '" + file + "' is older than today, moving to Stored folder")
