@@ -159,7 +159,7 @@ if (newFolderFreeSpace < free_space_minimum):
                 print("There was an error moving file '" + file + "'")
                 actions_taken.append("Error moving New file " + file + " to the Stored folder")
         else:
-            #print("File '" + file + "' has today's timestamp, ignoring")
+            print("File '" + file + "' has today's timestamp, ignoring")
             pass
 else:
     print("New folder free space is greater than " + str(free_space_minimum) + "GB, don't need to do anything")
